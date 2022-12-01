@@ -1,0 +1,52 @@
+<html>
+<body>
+    <form>
+        <label for="num">Valsts registracijas numurs:</label><br>
+<input type="text" id="num"> <br>
+<label for="fname">Automasinas VIN numurs:</label><br>
+<input type="text" id="vin"><br>
+<label>Marka:</label>
+<select id="cmarka" onchange="addOption(document.getElementById('cmodel'),`../srv/index.php?q=getmodel&id=${this.value}`)"></select>
+<br>
+<label>Modelis</label>
+<select id="cmodel"></select><br>
+  <label for="motP">Masinas motora tilpums(cm3):</label><br>
+  <input type="text" id="motP" ><br>
+  <label for="jauda">Masinas jauda:</label><br>
+  <input type="text" id="jauda" ><br>
+  <label for="fuel">Masinas degvielas tips:</label>
+<select id="cars" name="cars">
+  <option value="diesel">Dizeldegviela</option>
+  <option value="gasoline">Benzins</option>
+  <option value="gas">Benzins un gaze</option>
+</select><br>
+<label for="fname">Turetaja vards:</label><br>
+  <input type="text" id="fname" ><br>
+  <label for="lname">Turetaja uzvards:</label><br>
+  <input type="text" id="lname" ><br>
+  <label for="pilseta">Turetaja dzivesvietas pilseta:</label><br>
+  <input type="text" id="pilseta" ><br>
+  <label for="adrese">Turetaja adrese:</label><br>
+  <input type="text" id="adrese" ><br>
+<script>
+async function addOption(obj,link) {
+	let dati = await fetch(link);
+	let datiJson = await dati.json();
+	let data=datiJson.records
+//alert (data.length, "Tests");
+	for (let i = 0; i < data.length; i++) {
+	obj.innerHTML+=`<option value="${data[i]["id"]}">${data[i]["name"]}</option>` ;
+	}
+}
+addOption(document.getElementById("cmarka"),"../srv/index.php?q=producer");
+      
+        fetch("https://data.gov.lv/dati/lv/api/3/action/datastore_upsert")
+        .then(res=> res.json())
+        .then(data=> document.getElementById('root').innerHTML = 
+        JSON.stringify(data))
+        
+</script>
+  <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
