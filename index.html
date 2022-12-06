@@ -6,7 +6,7 @@
 <label for="fname">Automasinas VIN numurs:</label><br>
 <input type="text" id="vin"><br>
 <label>Marka:</label>
-<select id="cmarka" onchange="addOption(document.getElementById('cmodel'),`../srv/index.php?q=getmodel&id=${this.value}`)"></select>
+<select id="cmarka" onchange="addOption(document.getElementById('cmodel'),`index.php?q=getmodel&id=${this.value}`)"></select>
 <br>
 <label>Modelis</label>
 <select id="cmodel"></select><br>
